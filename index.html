@@ -346,6 +346,49 @@ table.admin-table { width: 100%; border-collapse: collapse; font-size: .86rem; }
 .btn-maps  { background: #4285F4; color: #ffffff; }
 .local-note { font-size: .76rem; color: var(--muted); margin-top: 12px; font-style: italic; }
 
+/* BOTÃO FLUTUANTE */
+.fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 998;
+  background: var(--rose);
+  color: #fff;
+  border: none;
+  border-radius: 100px;
+  padding: 13px 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Work Sans', sans-serif;
+  font-size: .88rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(184,60,110,.40);
+  transition: transform .2s, box-shadow .2s, padding .3s, font-size .3s;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 200px;
+}
+.fab:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(184,60,110,.50);
+}
+.fab:active { transform: translateY(0); }
+.fab .fab-label {
+  display: inline-block;
+  max-width: 120px;
+  overflow: hidden;
+  transition: max-width .3s ease, opacity .3s ease;
+}
+.fab.collapsed .fab-label {
+  max-width: 0;
+  opacity: 0;
+}
+.fab.collapsed {
+  padding: 13px 15px;
+}
+
 /* FOOTER */
 footer { padding: 40px 0 56px; text-align: center; color: var(--muted); font-size: .88rem; border-top: 1px solid var(--line); }
 footer .sign { display: block; font-family: 'Fraunces', serif; font-style: italic; font-size: 1.2rem; color: var(--rose); margin-bottom: 4px; }
@@ -546,6 +589,11 @@ footer .sign { display: block; font-family: 'Fraunces', serif; font-style: itali
     Mal podemos esperar para conhecer a Agatha Arthemis 💛
   </div>
 </footer>
+
+<!-- ═══ BOTÃO FLUTUANTE LOCALIZAÇÃO ═══ -->
+<button class="fab" id="fabLocal" onclick="document.querySelector('.local-widget').closest('section').scrollIntoView({behavior:'smooth', block:'start'})">
+  📍 <span class="fab-label">Como chegar</span>
+</button>
 
 <!-- ═══ MODAL COMPROVANTE ═══ -->
 <div class="modal-bg" id="modalBg">
@@ -978,6 +1026,19 @@ document.getElementById('btnAdminEnter').addEventListener('click', tryAdminLogin
 document.getElementById('adminPass').addEventListener('keydown', function(e){ if(e.key === 'Enter') tryAdminLogin(); });
 document.getElementById('btnCSV').addEventListener('click', exportCSV);
 document.getElementById('btnClear').addEventListener('click', clearData);
+
+// FAB — recolhe ao rolar, expande ao parar
+(function() {
+  var fab       = document.getElementById('fabLocal');
+  var scrollTimer = null;
+  window.addEventListener('scroll', function() {
+    if (fab) fab.classList.add('collapsed');
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(function() {
+      if (fab) fab.classList.remove('collapsed');
+    }, 800);
+  }, { passive: true });
+})();
 
 // Carregar dados e renderizar
 (function() {
