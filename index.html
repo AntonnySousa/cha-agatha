@@ -484,7 +484,7 @@ footer .sign { display: block; font-family: 'Fraunces', serif; font-style: itali
 //  CONFIGURAÇÃO
 // ─────────────────────────────────────────────────────────────
 var CFG = {
-  adminPassword: 'agatha2025',
+  adminPasswordHash: 'a4ea694c440d37a60a2ea9f47b3820becd11028d0bcb2ff87039ff608f5bd190',
   sheetsUrl:     'https://script.google.com/macros/s/AKfycbwOxT0Rg9CDrFf4fT-86ZJGhq3-CmwYlKUMxxBOl1JWg4WXAAUAYyD603m9aNAzkHs3/exec',
   telegramToken: '',   // cole seu token aqui
   telegramChatId: '',  // cole seu chat_id aqui
@@ -763,14 +763,21 @@ function closeModal() {
 // ─────────────────────────────────────────────────────────────
 //  ADMIN
 // ─────────────────────────────────────────────────────────────
-function tryAdminLogin() {
-  var pass    = document.getElementById('adminPass').value;
+async function tryAdminLogin() {
+  var pass    = document.getElementById('adminPass').value.trim();
   var errEl   = document.getElementById('adminError');
   var content = document.getElementById('adminContent');
 
-  if (pass.trim() === CFG.adminPassword) {
-    errEl.style.display     = 'none';
-    content.style.display   = 'block';
+  // Hash SHA-256 via Web Crypto API nativa do navegador
+  var encoder = new TextEncoder();
+  var data    = encoder.encode(pass);
+  var hashBuf = await crypto.subtle.digest('SHA-256', data);
+  var hashArr = Array.from(new Uint8Array(hashBuf));
+  var hashHex = hashArr.map(function(b){ return b.toString(16).padStart(2,'0'); }).join('');
+
+  if (hashHex === CFG.adminPasswordHash) {
+    errEl.style.display   = 'none';
+    content.style.display = 'block';
     renderAdmin();
   } else {
     errEl.style.display = 'block';
