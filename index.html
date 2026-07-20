@@ -634,7 +634,7 @@ var CFG = {
 var SIZES = [
   { id:'RN',  emoji:'🌱', label:'RN',  range:'até 3kg',   meta:2,  hint:'💡 Fralda dos primeiros dias — um tesouro para o começo!' },
   { id:'P',   emoji:'🌷', label:'P',   range:'3 a 6kg',   meta:6,  hint:'💡 Tamanho P dura os primeiros 1-2 meses, super útil!' },
-  { id:'M',   emoji:'🌸', label:'M',   range:'6 a 9kg',   meta:7, hint:'💡 Tamanho M é o mais usado — a Agatha vai ficar aqui bastante!' },
+  { id:'M',   emoji:'🌸', label:'M',   range:'6 a 9kg',   meta:7, hint:'💡 Tamanho M é o mais usado — a Ágatha vai ficar aqui bastante!' },
   { id:'G',   emoji:'💐', label:'G',   range:'9 a 12kg',  meta:5, hint:'💡 Tamanho G é onde muitos bebês passam mais meses!' },
   { id:'XG',  emoji:'👑', label:'XG',  range:'12 a 15kg', meta:5,  hint:'💡 A princesinha já grandinha — e vai adorar saber que você pensou nisso!' }
 ];
@@ -852,7 +852,7 @@ function updateWhatsapp() {
 async function notifyTelegram(nome, sizeInfo, mimo) {
   if (!CFG.telegramToken || !CFG.telegramChatId) return;
   var msg =
-    '🎉 Nova confirmação — Chá da Agatha\n\n' +
+    '🎉 Nova confirmação — Chá da Ágatha\n\n' +
     '👤 Nome: ' + nome + '\n' +
     '🍼 Fralda: ' + sizeInfo.label + ' (' + sizeInfo.range + ')\n' +
     '🎁 Mimo: ' + (mimo || 'não informado');
