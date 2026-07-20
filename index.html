@@ -602,7 +602,7 @@ footer .sign { display: block; font-family: 'Fraunces', serif; font-style: itali
 </footer>
 
 <!-- ═══ BOTÃO FLUTUANTE LOCALIZAÇÃO ═══ -->
-<button class="fab" id="fabLocal" onclick="document.querySelector('.local-widget').closest('section').scrollIntoView({behavior:'smooth', block:'start'})">
+<button class="fab" id="fabLocal">
   📍 <span class="fab-label">Como chegar</span>
 </button>
 
@@ -1039,7 +1039,12 @@ document.getElementById('adminPass').addEventListener('keydown', function(e){ if
 document.getElementById('btnCSV').addEventListener('click', exportCSV);
 document.getElementById('btnClear').addEventListener('click', clearData);
 
-// FAB — recolhe ao rolar, expande ao parar
+// FAB — scroll para localização
+  document.getElementById('fabLocal').addEventListener('click', function(){
+    document.querySelector('.local-widget').closest('section').scrollIntoView({behavior:'smooth', block:'start'});
+  });
+
+  // FAB — recolhe ao rolar, expande ao parar
 (function() {
   var fab       = document.getElementById('fabLocal');
   var scrollTimer = null;
